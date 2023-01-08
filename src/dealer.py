@@ -25,6 +25,7 @@ class Dealer:
             self.hit_player(players[i])
             self.hit_player(players[i])
 
+            # if player has a score of 21 in the opening round, they have scored a natural
             if players[i].score == 21 and self.score < 21:
                 players[i].status = "NATURAL"
                 print("Player " + str(i + 1) + " has reached a natural")
@@ -41,7 +42,8 @@ class Dealer:
 
     def add_to_hand(self, card):
         self.cards.append(card)
-
+        
+        # largest possible value for Ace is added to the score
         if card.name == "Ace" and self.STAND_POINT - self.score >= 11:
             self.score += 11
         elif card.name == "Ace" and self.STAND_POINT - self.score < 11:
@@ -51,9 +53,11 @@ class Dealer:
 
     
     def evaluate_score(self, players):
+        #dealer score is valid
         if self.score <= 21 and self.score >= self.STAND_POINT:
             self.game_over = True
             self.announce_results(players)
+        #dealer has bust
         if self.score > 21:
             self.game_over = True
             self.announce_dealer_bust(players)
@@ -80,7 +84,8 @@ class Dealer:
 
 
     def draw_cards_until_stand_or_bust(self):
-        while self.score < 17:
+        # draw cards until dealer's score is atleast 17
+        while self.score < self.STAND_POINT:
             card = self.deck.pick_card()
             self.add_to_hand(card)
 

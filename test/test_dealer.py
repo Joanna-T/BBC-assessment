@@ -12,7 +12,7 @@ class DealerTestCase(unittest.TestCase):
     def tearDown(self):  # this method will be run after each tests
         pass
 
-    def test_dealing_opening_hand_gives_players_two_cards(self):  # any method beginning with 'test' will be run by unittest
+    def test_dealing_opening_hand_gives_players_two_cards(self): 
         player_array = [Hand(), Hand()]
 
         self.dealer.deal_opening_hand(player_array)
@@ -33,13 +33,21 @@ class DealerTestCase(unittest.TestCase):
 
         self.assertEqual(self.dealer.score, 11)
 
-    def test_drawing_cards_to_reaches_value_more_than_or_equal_to_17(self):
+    def test_drawing_cards_to_reach_value_more_than_or_equal_to_17(self):
         self.dealer.draw_cards_until_stand_or_bust()
 
         self.assertGreaterEqual(self.dealer.score, 17)
 
-    def test_correct_results_announced_if_dealer_is_bust(self):
+    def test_game_over_if_score_more_than_17(self):
         self.dealer.score = 25
+
+        players = [Hand()]
+
+        self.dealer.evaluate_score(players)
+
+        self.assertEqual(self.dealer.game_over, True)
+
+
 
 
 
